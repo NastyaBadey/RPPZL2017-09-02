@@ -47,16 +47,29 @@ public class A_Graphs {
             Mark m = entry.getValue();
             System.out.format("%1$s : (%2$d, %3$d)\n", entry.getKey(), m.pre, m.post);
         }
+
+        System.out.println();
+        for (int i = 0; i < graph.letters.size(); i++) {
+            if ((visitedVertices.get(graph.letters.get(i)).post -
+                    visitedVertices.get(graph.letters.get(i)).pre == 1
+                    && graph.effluents.get(graph.letters.get(i))[0] > 1)) {
+                for (int j = 0; j < adjacencyList.get(graph.letters.get(i)).size(); j++) {
+                    if (visitedVertices.get(adjacencyList.get(graph.letters.get(i)).get(j)).pre
+                            - visitedVertices.get(graph.letters.get(i)).pre != -1) {
+                        System.out.println(adjacencyList.get(graph.letters.get(i)).get(j) +
+                                " " + graph.letters.get(i) + " обратная");
+                    }
+                }
+            }
+        }
     }
 
     static void dfs(String vertexName) {
         if (visitedVertices.containsKey(vertexName)) return;
 
-        // set pre (time of enter)
         visitedVertices.put(vertexName, new Mark(count,-1));
         count++;
 
-        // retrieve adjacent vertices
         Map<String, List<String>> vertexes = graph.getAdjacencyList();
         List<String> adjacentVertices = vertexes.get(vertexName);
 
@@ -65,7 +78,6 @@ public class A_Graphs {
             dfs(v);
         }
 
-        // set post (time of exit)
         Mark m = visitedVertices.get(vertexName);
         m.post = count++;
     }

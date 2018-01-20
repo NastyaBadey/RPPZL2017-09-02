@@ -18,9 +18,7 @@ public class C_Graphs {
     }
 
     static DirectedGraph graph;
-    // map of visited vertices
     static Map<String, C_Graphs.Mark> visitedVertices = new LinkedHashMap<>();
-    // time counter
     static int count = 1;
 
     public static void main(String[] args) {
@@ -64,11 +62,9 @@ public class C_Graphs {
     static void dfs(String vertexName) {
         if (visitedVertices.containsKey(vertexName)) return;
 
-// set pre (time of enter)
         visitedVertices.put(vertexName, new C_Graphs.Mark(count, -1));
         count++;
 
-// retrieve adjacent vertices
         Map<String, List<String>> vm = graph.getVertexMap();
         List<String> adjacentVertices = vm.get(vertexName);
 
@@ -77,7 +73,6 @@ public class C_Graphs {
             dfs(v);
         }
 
-// set post (time of exit)
         C_Graphs.Mark m = visitedVertices.get(vertexName);
         m.post = count++;
     }
